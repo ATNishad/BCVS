@@ -1,8 +1,10 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<iterator>
 #include<algorithm>
 #include<chrono>
+#include<functional>
 using namespace std;
 
 const string timer() {
@@ -28,13 +30,27 @@ Block(string A,string B,string C) : data(A), timestamp(B), previous_hash(C) {
 
 //hash_gen function
 void hash_generator(){
-    current_hash=data+"|"+timestamp+"|"+previous_hash;
+    string pre_hash_combine=data+"|"+timestamp+"|"+previous_hash;
+    std::hash<string> hasher;
+    current_hash=to_string(hasher(pre_hash_combine));
     cout<<"current hash:"<<current_hash<<"\n";
 }
 
-//getter function
+//getter functions
+string get_data(){
+    return data;
+}
+
+string get_timestamp(){
+    return timestamp;
+}
+
+string get_previous_hash(){
+    return previous_hash;
+}
+
 string get_current_hash(){
-    return current_hash;   
+    return current_hash;
 }
 
 };
@@ -57,5 +73,29 @@ void add_block(string data){
     chain.push_back(new_block_obj);
 }
 
+
+void display_chain(){
+    for(int i=0 ; i<chain.size() ; i++){
+        cout<<"\n";
+        cout<<"Block index:"<<i<<"\n";
+        cout<<"Data:"<<chain[i].get_data()<<"\n";
+        cout<<"Previous block\'s hash:"<<chain[i].get_previous_hash()<<"\n";
+        cout<<"Current block\'s hash:"<<chain[i].get_current_hash()<<"\n";
+    }
+}
 };
 
+int main(){
+    string data;
+    Blockchain BC_main;
+    do{
+    cout<<"Enter /q to quit \n";
+    cout<<"enter data:";
+    getline(cin,data);
+    if(data == "/q"){
+        break;
+    }
+    BC_main.add_block(data);
+    }while(data != "/q");
+    BC_main.display_chain();
+}
