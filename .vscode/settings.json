@@ -1,0 +1,18 @@
+{
+    "C_Cpp.default.compilerPath": "c:\\Users\\agmelco\\Desktop\\mysys\\ucrt64\\bin\\g++.exe",
+    "files.associations": {
+        "iostream": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "format": "cpp",
+        "initializer_list": "cpp",
+        "span": "cpp",
+        "text_encoding": "cpp",
+        "ostream": "cpp",
+        "fstream": "cpp"
+    }
+}
