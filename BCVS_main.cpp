@@ -83,6 +83,25 @@ void display_chain(){
         cout<<"Current block\'s hash:"<<chain[i].get_current_hash()<<"\n";
     }
 }
+
+void block_verification(){
+    for(auto itr = chain.begin()+1; itr!= chain.end() ; ++itr){
+        auto p_block = prev(itr);
+        if(itr->get_previous_hash() != p_block->get_current_hash() ){
+            cout<<"Block verification failed, mismatched at block index "<<distance(chain.begin(),itr)<<"\n";
+            return;
+            }
+
+        string recomputed_hash = std::to_string(std::hash<string>{}(
+            itr->get_data() + "|" + itr->get_timestamp() + "|" + itr->get_previous_hash()));
+
+        if(itr->get_current_hash() != recomputed_hash){
+            cout<<"Block verification failed, mismatched at block index "<<distance(chain.begin(),itr)<<"\n";
+            return;
+        }
+        }
+        cout<<"All blocks are verified and valid \n";  
+    }
 };
 
 int main(){
@@ -98,4 +117,6 @@ int main(){
     BC_main.add_block(data);
     }while(data != "/q");
     BC_main.display_chain();
+    cout<<"\n";
+    BC_main.block_verification();
 }
